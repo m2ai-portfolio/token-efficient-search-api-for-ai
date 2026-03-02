@@ -1,38 +1,59 @@
 {
   "codebase_patterns": {
     "framework": "Python 3.11+ CLI tool using argparse",
-    "file_structure": "src/ (cli.py, core.py, utils.py) + tests/ (test_cli.py, test_core.py, test_security.py)",
+    "file_structure": "src/ (cli.py, core.py, utils.py) + tests/ (test_cli.py, test_core.py, test_file_io.py, test_integration.py, test_logging.py, test_security.py, conftest.py)",
     "entry_point": "python -m src.cli",
     "config_pattern": "ToolConfig dataclass in src/cli.py",
-    "test_framework": "pytest with class-based test organization",
-    "output_formats": ["text", "json", "compact"]
+    "test_framework": "pytest with class-based test organization + conftest.py shared fixtures",
+    "output_formats": ["text", "json", "compact"],
+    "logging_modes": ["default (WARNING)", "verbose (DEBUG)", "quiet (ERROR)", "log-file", "DEBUG env var"]
   },
   "common_mistakes": [
     "Always validate file paths before open() - use validate_file_path() from utils.py",
     "Always check file size before reading with check_file_size() from utils.py",
     "Use positive_int() validator for numeric argparse arguments",
-    "Add return type hints (-> None) to all functions"
+    "Add return type hints (-> None) to all functions",
+    "Always use encoding='utf-8' on all file operations",
+    "Never hardcode absolute paths in tests - use Path(__file__).parent.parent.resolve()",
+    "Validate log file paths same as data file paths",
+    "Sanitize sensitive data in debug log output"
   ],
   "security_patterns": [
     "Path traversal protection via validate_file_path() in utils.py",
     "File size limit (MAX_FILE_SIZE = 10MB) enforced before reads",
     "FORBIDDEN_DIRECTORIES set blocks /etc, /proc, /sys, /dev, /root, /boot",
-    "Input validation on all user-controlled parameters"
+    "Input validation on all user-controlled parameters",
+    "Query validation (empty, length limits) via validate_query() in core.py",
+    "Log file paths validated before FileHandler creation"
   ],
   "testing_patterns": [
     "Tests use capsys for output capturing",
     "tempfile used for file I/O tests with proper cleanup",
     "Security tests in separate test_security.py file",
-    "50 tests total, all must pass before commits"
+    "Integration tests use subprocess.run() with timeout=30",
+    "Use PROJECT_ROOT constant for portable path references",
+    "Extract common test helpers to module-level functions (DRY)",
+    "167 tests total, all must pass before commits",
+    "89% code coverage (target >80%)"
   ],
   "sessions": [
     {
       "session": 1,
-      "completed": ["M2A-154: CLI Argument Parsing"],
+      "completed": [
+        "M2A-154: CLI Argument Parsing",
+        "M2A-155: Core Command Implementation",
+        "M2A-156: File I/O Operations",
+        "M2A-157: Logging and Debugging",
+        "M2A-158: Testing Suite"
+      ],
       "learnings": [
         "Path traversal vulnerability caught in code review - always validate file paths",
         "Unbounded file reads can cause DoS - always check file size",
-        "argparse custom type validators work well for input bounds checking"
+        "argparse custom type validators work well for input bounds checking",
+        "Log file path validation needed same as data file paths",
+        "Hardcoded paths in integration tests break portability",
+        "DRY principle applies to test helpers - extract to module level",
+        "Subprocess-based integration tests need timeout parameter"
       ]
     }
   ]
