@@ -1,0 +1,37 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║  TEST 1: Reading Multiple Queries from .txt File                           ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+$ cat /tmp/test_queries.txt
+AI agents
+machine learning
+token optimization
+
+$ python -m src.cli search --input /tmp/test_queries.txt
+
+============================================================
+Found 9 result(s)
+============================================================
+
+Result #1
+  Title: Building AI Agents with Python
+  URL: https://example.com/ai-agents-python
+  Snippet: AI agents can be built using Python frameworks. Key components...
+  Relevance: 1.00
+  Tokens: 41
+
+Result #2
+  Title: Token Optimization Strategies for AI APIs
+  URL: https://example.com/token-optimization
+  Snippet: Reducing token usage in AI API calls is crucial...
+  Relevance: 0.50
+  Tokens: 48
+
+... (7 more results)
+
+============================================================
+Total tokens: 405
+============================================================
+2026-03-01 23:47:00 - __main__ - INFO - Found 9 result(s) from 3 query/queries
+
+✓ SUCCESS: Processed 3 queries from file, aggregated 9 results

@@ -1,0 +1,86 @@
+REGRESSION TEST REPORT
+======================
+Date: 2026-03-01
+Project: metroplex-ideaforge-10
+Feature: M2A-156 File I/O Operations
+
+NEW FEATURE TESTS (File I/O Operations)
+========================================
+
+Test 1: Read from .txt input file → PASS
+- Created /tmp/qa_queries.txt with 3 queries
+- Command: python -m src.cli search --input /tmp/qa_queries.txt
+- Result: Successfully processed all 3 queries (AI agents, machine learning, token optimization)
+- Output: 9 total results returned with proper formatting
+
+Test 2: Read from .json input file → PASS
+- Created /tmp/qa_queries.json with ["vector database", "python cli"]
+- Command: python -m src.cli search --input /tmp/qa_queries.json --format json
+- Result: Successfully processed both queries
+- Output: Valid JSON array with 3 results
+
+Test 3: Write to output file → PASS
+- Command: python -m src.cli search "search API design" --output /tmp/qa_output.txt
+- Result: File created successfully at /tmp/qa_output.txt
+- Verification: cat confirmed formatted results written to file
+- Log message: "Results written to /tmp/qa_output.txt"
+
+Test 4: Handle missing input file → PASS
+- Command: python -m src.cli search --input /tmp/nonexistent_file.txt
+- Expected: Clear error message
+- Result: EXIT CODE 1 with message "Input file not found: /tmp/nonexistent_file.txt"
+- Status: Proper error handling confirmed
+
+Test 5: Full pipeline (input → search → output) → PASS
+- Input: /tmp/qa_pipeline_in.txt with 2 queries (prompt engineering, language models)
+- Command: python -m src.cli search --input /tmp/qa_pipeline_in.txt --output /tmp/qa_pipeline_out.txt --format json
+- Result: JSON output file created successfully with 5 results
+- Log: "Found 5 result(s) from 2 query/queries" + "Results written to /tmp/qa_pipeline_out.txt"
+
+REGRESSION TESTS (Existing Features)
+=====================================
+
+Test R1: CLI help works → PASS
+- Command: python -m src.cli --help
+- Output: Proper help text with usage, positional arguments, options, and examples
+- Additional: python -m src.cli search --help also works correctly
+
+Test R2: Direct query search works → PASS
+- Command: python -m src.cli search "AI agents" --format compact --max-results 3
+- Result: Compact format output with 3 results
+- Format: "1. Title [URL] (relevance) | 2. Title..."
+- Relevance scores and URLs present
+
+Test R3: Security blocks /etc access → PASS
+- Command: python -m src.cli search --input /etc/passwd
+- Expected: Security error blocking system directories
+- Result: EXIT CODE 1 with message "Invalid input file: Access to system directory '/etc' is forbidden"
+- Status: Security validation working correctly
+
+Test R4: Full pytest suite → PASS
+- Command: python -m pytest tests/ -v
+- Result: 99 passed in 0.19s
+- Coverage: All test modules passed (test_cli.py, test_core.py, test_file_io.py, test_security.py)
+- No failures, no warnings
+
+SUMMARY
+=======
+Overall Status: PASS
+New Feature: File I/O Operations - PASS (5/5 tests)
+Regression: Existing Features - PASS (4/4 tests)
+Total Tests: 9/9 PASS + 99 unit tests PASS
+Issues Found: None
+
+All file I/O operations work correctly:
+- Text file input (.txt)
+- JSON file input (.json)
+- File output with --output flag
+- Error handling for missing files
+- Security validation for system directories
+- Full input → process → output pipeline
+
+All existing features remain functional:
+- CLI help and argument parsing
+- Direct query search with formatting options
+- Security path validation
+- Comprehensive test suite

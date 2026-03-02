@@ -1,0 +1,35 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║  TEST 2: Reading from .json File with JSON Output                          ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+$ cat /tmp/test_queries.json
+["vector database", "python cli"]
+
+$ python -m src.cli search --input /tmp/test_queries.json --format json
+
+[
+  {
+    "title": "Vector Databases for Semantic Search",
+    "snippet": "Vector databases store embeddings for fast similarity...",
+    "url": "https://example.com/vector-databases",
+    "relevance": 0.7,
+    "token_count": 44
+  },
+  {
+    "title": "Python CLI Development Guide",
+    "snippet": "Building Python CLI tools involves argument parsing...",
+    "url": "https://example.com/python-cli-guide",
+    "relevance": 1.0,
+    "token_count": 45
+  },
+  {
+    "title": "Building AI Agents with Python",
+    "snippet": "AI agents can be built using Python frameworks...",
+    "url": "https://example.com/ai-agents-python",
+    "relevance": 0.5,
+    "token_count": 41
+  }
+]
+2026-03-01 23:47:08 - __main__ - INFO - Found 3 result(s) from 2 query/queries
+
+✓ SUCCESS: JSON input processed, valid JSON output generated

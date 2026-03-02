@@ -1,0 +1,46 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║  TEST 4: Error Handling for Missing File                                   ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+$ python -m src.cli search --input /tmp/nonexistent.txt
+2026-03-01 23:47:18 - __main__ - ERROR - Input file not found: /tmp/nonexistent.txt
+
+✓ SUCCESS: Clear error message displayed, graceful exit
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║  TEST 5: All Tests Passing                                                 ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+$ python -m pytest tests/ -v
+
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0
+collected 99 items
+
+tests/test_cli.py::TestParseArgs::test_help_flag PASSED                  [  1%]
+tests/test_cli.py::TestParseArgs::test_search_with_query PASSED          [  2%]
+tests/test_cli.py::TestParseArgs::test_verbose_flag PASSED               [  3%]
+...
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_txt_file_multiple_queries PASSED [ 57%]
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_txt_file_with_empty_lines PASSED [ 58%]
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_json_file_array_of_strings PASSED [ 59%]
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_json_file_invalid_format PASSED [ 60%]
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_missing_file PASSED [ 61%]
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_empty_txt_file PASSED [ 62%]
+tests/test_file_io.py::TestReadQueriesFromFile::test_read_empty_json_array PASSED [ 63%]
+tests/test_file_io.py::TestWriteResultsToFile::test_write_to_file PASSED [ 64%]
+tests/test_file_io.py::TestWriteResultsToFile::test_write_to_nonexistent_directory PASSED [ 65%]
+tests/test_file_io.py::TestWriteResultsToFile::test_write_empty_string PASSED [ 66%]
+tests/test_file_io.py::TestDetectFileFormat::test_detect_json_format PASSED [ 67%]
+tests/test_file_io.py::TestDetectFileFormat::test_detect_txt_format PASSED [ 68%]
+tests/test_file_io.py::TestDetectFileFormat::test_detect_csv_format PASSED [ 69%]
+tests/test_file_io.py::TestDetectFileFormat::test_detect_unknown_format PASSED [ 70%]
+tests/test_file_io.py::TestFullPipeline::test_txt_input_to_txt_output PASSED [ 71%]
+tests/test_file_io.py::TestFullPipeline::test_json_input_to_json_output PASSED [ 72%]
+tests/test_file_io.py::TestFullPipeline::test_multiple_queries_aggregate_results PASSED [ 73%]
+tests/test_security.py::TestValidateFilePath::test_valid_relative_path PASSED [ 74%]
+...
+
+============================== 99 passed in 0.19s =======================================
+
+✓ SUCCESS: All 99 tests passing (82 existing + 17 new file I/O tests)

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from .core import search
-from .utils import format_results, validate_file_path, check_file_size
+from .utils import format_results, validate_file_path, check_file_size, read_queries_from_file, write_results_to_file
 
 
 @dataclass
@@ -170,17 +170,15 @@ def run_search(config: ToolConfig) -> None:
     logger = logging.getLogger(__name__)
 
     # Determine query source
+    queries = []
     if config.input_file:
         logger.debug(f"Reading queries from file: {config.input_file}")
         try:
-            # Validate input file path
-            input_path = validate_file_path(config.input_file, check_exists=True)
-
-            # Check file size before reading
-            check_file_size(input_path)
-
-            with open(input_path, 'r', encoding='utf-8') as f:
-                query = f.read().strip()
+            # Use the new utility function to read queries
+            queries = read_queries_from_file(config.input_file)
+            if not queries:
+                logger.error("Input file contains no valid queries")
+                sys.exit(1)
         except FileNotFoundError:
             logger.error(f"Input file not found: {config.input_file}")
             sys.exit(1)
@@ -192,40 +190,49 @@ def run_search(config: ToolConfig) -> None:
             sys.exit(1)
     else:
         query = config.query
+        # Support stdin
+        if query == "-":
+            logger.debug("Reading query from stdin")
+            query = sys.stdin.read().strip()
+            if not query:
+                logger.error("No input received from stdin")
+                sys.exit(1)
+        queries = [query]
 
-    # Support stdin
-    if query == "-":
-        logger.debug("Reading query from stdin")
-        query = sys.stdin.read().strip()
-        if not query:
-            logger.error("No input received from stdin")
-            sys.exit(1)
-
-    logger.debug(f"Searching for: {query}")
+    logger.debug(f"Processing {len(queries)} query/queries")
     logger.debug(f"Max results: {config.max_results}")
     logger.debug(f"Output format: {config.format}")
 
-    # Perform search
-    try:
-        results = search(query, max_results=config.max_results)
-    except ValueError as e:
-        logger.error(f"Invalid query: {e}")
-        sys.exit(1)
-    logger.info(f"Found {len(results)} result(s)")
+    # Perform search for each query and collect all results
+    all_results = []
+    for i, query in enumerate(queries, 1):
+        if len(queries) > 1:
+            logger.debug(f"Searching query {i}/{len(queries)}: {query}")
+        else:
+            logger.debug(f"Searching for: {query}")
+
+        try:
+            results = search(query, max_results=config.max_results)
+            all_results.extend(results)
+        except ValueError as e:
+            logger.error(f"Invalid query '{query}': {e}")
+            if len(queries) == 1:
+                sys.exit(1)
+            # Continue with other queries if multiple queries
+            continue
+
+    logger.info(f"Found {len(all_results)} result(s) from {len(queries)} query/queries")
 
     # Format results
-    formatted_output = format_results(results, format_type=config.format)
+    formatted_output = format_results(all_results, format_type=config.format)
 
     # Output results
     if config.output_file:
         logger.debug(f"Writing results to file: {config.output_file}")
         try:
-            # Validate output file path
-            output_path = validate_file_path(config.output_file, check_exists=False)
-
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(formatted_output)
-            logger.info(f"Results written to {config.output_file}")
+            # Use the new utility function to write results
+            output_path = write_results_to_file(formatted_output, config.output_file)
+            logger.info(f"Results written to {output_path}")
         except ValueError as e:
             logger.error(f"Invalid output file path: {e}")
             sys.exit(1)

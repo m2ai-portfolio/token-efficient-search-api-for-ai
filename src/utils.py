@@ -80,6 +80,86 @@ def check_file_size(file_path: Path, max_size: int = MAX_FILE_SIZE) -> None:
         )
 
 
+def read_queries_from_file(file_path: str) -> list[str]:
+    """
+    Read queries from a file, one query per line.
+    Supports .txt files (one query per line) and .json files (array of strings).
+
+    Args:
+        file_path: Path to the input file
+
+    Returns:
+        List of query strings
+
+    Raises:
+        ValueError: If path is invalid or file format unsupported
+        FileNotFoundError: If file doesn't exist
+    """
+    # Validate path
+    validated_path = validate_file_path(file_path, check_exists=True)
+    # Check file size
+    check_file_size(validated_path)
+
+    suffix = validated_path.suffix.lower()
+
+    with open(validated_path, 'r', encoding='utf-8') as f:
+        if suffix == '.json':
+            data = json.load(f)
+            if not isinstance(data, list):
+                raise ValueError("JSON input file must contain an array of query strings")
+            return [str(q).strip() for q in data if str(q).strip()]
+        else:
+            # Default: treat as text, one query per line
+            lines = f.readlines()
+            return [line.strip() for line in lines if line.strip()]
+
+
+def write_results_to_file(results_text: str, file_path: str) -> str:
+    """
+    Write formatted results to a file.
+
+    Args:
+        results_text: Formatted results string
+        file_path: Path to write to
+
+    Returns:
+        Absolute path of the written file
+
+    Raises:
+        ValueError: If path is invalid
+        IOError: If file cannot be written
+    """
+    validated_path = validate_file_path(file_path, check_exists=False)
+
+    # Ensure parent directory exists
+    validated_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(validated_path, 'w', encoding='utf-8') as f:
+        f.write(results_text)
+
+    return str(validated_path)
+
+
+def detect_file_format(file_path: str) -> str:
+    """
+    Detect the format of an input file based on extension.
+
+    Args:
+        file_path: Path to the file
+
+    Returns:
+        Format string: 'json', 'txt', or 'unknown'
+    """
+    suffix = Path(file_path).suffix.lower()
+    format_map = {
+        '.json': 'json',
+        '.txt': 'txt',
+        '.text': 'txt',
+        '.csv': 'csv',
+    }
+    return format_map.get(suffix, 'txt')  # Default to txt
+
+
 def format_results(results: List[Dict[str, Any]], format_type: str = "text") -> str:
     """
     Format search results based on the specified format.

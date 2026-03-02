@@ -1,0 +1,111 @@
+REGRESSION TEST REPORT - M2A-156 FILE I/O OPERATIONS
+=====================================================
+Date: 2026-03-01 23:54 UTC
+Project: metroplex-ideaforge-10
+Test Type: New Feature + Regression Test
+QA Agent: Claude (Sonnet 4.5)
+
+OVERALL RESULT: PASS
+====================
+
+NEW FEATURE TESTS (5/5 PASS)
+============================
+
+Test 1: Read from .txt input file
+  Command: python -m src.cli search --input /tmp/qa_queries.txt
+  Input: 3 queries (AI agents, machine learning, token optimization)
+  Expected: Process all queries and return results
+  Actual: Found 9 result(s) from 3 query/queries
+  Status: PASS
+
+Test 2: Read from .json input file
+  Command: python -m src.cli search --input /tmp/qa_queries.json --format json
+  Input: ["vector database", "python cli"]
+  Expected: Process both queries with JSON output
+  Actual: Valid JSON array with 3 results
+  Status: PASS
+
+Test 3: Write to output file
+  Command: python -m src.cli search "search API design" --output /tmp/qa_output.txt
+  Expected: Create file with formatted search results
+  Actual: File created, log message "Results written to /tmp/qa_output.txt"
+  Verification: cat confirmed content present
+  Status: PASS
+
+Test 4: Handle missing input file
+  Command: python -m src.cli search --input /tmp/nonexistent_file.txt
+  Expected: Clear error message about file not found
+  Actual: "ERROR - Input file not found: /tmp/nonexistent_file.txt" (exit code 1)
+  Status: PASS
+
+Test 5: Full pipeline (input to output)
+  Command: python -m src.cli search --input /tmp/qa_pipeline_in.txt --output /tmp/qa_pipeline_out.txt --format json
+  Input: 2 queries (prompt engineering, language models)
+  Expected: JSON output file with results for both queries
+  Actual: 5 results written to output file in valid JSON format
+  Log: "Found 5 result(s) from 2 query/queries" + "Results written to..."
+  Status: PASS
+
+REGRESSION TESTS (4/4 PASS)
+============================
+
+Test R1: CLI help works
+  Command: python -m src.cli --help
+  Expected: Display help text with usage and examples
+  Actual: Complete help output with all options and examples
+  Status: PASS
+
+Test R2: Direct query search works
+  Command: python -m src.cli search "AI agents" --format compact --max-results 3
+  Expected: Compact format with 3 results
+  Actual: "1. Building AI Agents... (1.00) | 2. Token Optimization... (0.50) | ..."
+  Status: PASS
+
+Test R3: Security blocks system directories
+  Command: python -m src.cli search --input /etc/passwd
+  Expected: Security error blocking /etc access
+  Actual: "ERROR - Invalid input file: Access to system directory '/etc' is forbidden"
+  Status: PASS
+
+Test R4: Full pytest suite passes
+  Command: python -m pytest tests/ -v
+  Expected: All tests pass
+  Actual: 99 passed in 0.19s
+  Test modules: test_cli.py, test_core.py, test_file_io.py, test_security.py
+  Status: PASS
+
+ISSUES FOUND
+============
+None
+
+FEATURE VERIFICATION
+====================
+File I/O Operations Feature is fully functional:
+- Text file input (.txt) - Working
+- JSON file input (.json) - Working
+- File output (--output flag) - Working
+- Error handling for missing files - Working
+- Security validation for system paths - Working
+- Input to output pipeline - Working
+
+No regressions detected in existing features:
+- CLI argument parsing - Working
+- Search functionality - Working
+- Output formatting (text, json, compact) - Working
+- Security validation - Working
+- Unit test coverage - 99 tests passing
+
+EVIDENCE FILES
+==============
+- /home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10/screenshots/regression-test-results.txt
+- /home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10/screenshots/test-execution-log.txt
+- /home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10/screenshots/M2A-156-regression-final.txt
+
+CONCLUSION
+==========
+The File I/O Operations feature (M2A-156) has been successfully implemented and tested.
+All new feature tests pass (5/5).
+All regression tests pass (4/4).
+All unit tests pass (99/99).
+No issues found.
+Ready for deployment.

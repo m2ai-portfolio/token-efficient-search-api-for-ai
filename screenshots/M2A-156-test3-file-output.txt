@@ -1,0 +1,37 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║  TEST 3: Writing to Output File & Creating Nested Directories              ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+$ python -m src.cli search "search API" --output /tmp/test_output.txt
+2026-03-01 23:47:12 - INFO - Found 5 result(s) from 1 query/queries
+2026-03-01 23:47:12 - INFO - Results written to /tmp/test_output.txt
+
+$ cat /tmp/test_output.txt | head -20
+============================================================
+Found 5 result(s)
+============================================================
+
+Result #1
+  Title: Web Search API Design Patterns
+  URL: https://example.com/search-api-design
+  Snippet: Designing efficient search APIs requires consideration...
+  Relevance: 1.00
+  Tokens: 46
+
+Result #2
+  Title: Vector Databases for Semantic Search
+  URL: https://example.com/vector-databases
+  Snippet: Vector databases store embeddings for fast similarity...
+  Relevance: 0.50
+  Tokens: 44
+...
+
+✓ SUCCESS: Output file created and written correctly
+
+$ python -m src.cli search "AI" --output /tmp/test_subdir/nested/output.txt
+2026-03-01 23:47:22 - INFO - Results written to /tmp/test_subdir/nested/output.txt
+
+$ ls -la /tmp/test_subdir/nested/
+-rw-rw-r-- 1 user user 1720 Mar  1 23:47 output.txt
+
+✓ SUCCESS: Nested directory structure created automatically
