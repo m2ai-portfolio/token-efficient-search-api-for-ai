@@ -1,0 +1,41 @@
+{
+  "project_id": "95729907-ef35-4e3b-9fb4-4cf26f4b1117",
+  "project_name": "Token-Efficient Search API for AI",
+  "project_slug": "63b7ca174433",
+  "meta_issue_id": "M2A-159",
+  "total_issues": 5,
+  "team_key": "M2A",
+  "created_at": "2026-03-02T05:11:39.685Z",
+  "issues": [
+    {
+      "id": "M2A-154",
+      "title": "CLI Argument Parsing",
+      "priority": "urgent",
+      "number": 154
+    },
+    {
+      "id": "M2A-155",
+      "title": "Core Command Implementation",
+      "priority": "high",
+      "number": 155
+    },
+    {
+      "id": "M2A-156",
+      "title": "File I/O Operations",
+      "priority": "high",
+      "number": 156
+    },
+    {
+      "id": "M2A-157",
+      "title": "Logging and Debugging",
+      "priority": "medium",
+      "number": 157
+    },
+    {
+      "id": "M2A-158",
+      "title": "Testing Suite",
+      "priority": "medium",
+      "number": 158
+    }
+  ]
+}
