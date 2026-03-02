@@ -1,0 +1,59 @@
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0 -- /home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10
+plugins: cov-7.0.0
+[1mcollecting ... [0mcollected 50 items
+
+tests/test_cli.py::TestParseArgs::test_help_flag [32mPASSED[0m[32m                  [  2%][0m
+tests/test_cli.py::TestParseArgs::test_search_with_query [32mPASSED[0m[32m          [  4%][0m
+tests/test_cli.py::TestParseArgs::test_verbose_flag [32mPASSED[0m[32m               [  6%][0m
+tests/test_cli.py::TestParseArgs::test_format_options [32mPASSED[0m[32m             [  8%][0m
+tests/test_cli.py::TestParseArgs::test_max_results_flag [32mPASSED[0m[32m           [ 10%][0m
+tests/test_cli.py::TestParseArgs::test_short_flags [32mPASSED[0m[32m                [ 12%][0m
+tests/test_cli.py::TestParseArgs::test_missing_command [32mPASSED[0m[32m            [ 14%][0m
+tests/test_cli.py::TestParseArgs::test_missing_query_and_input [32mPASSED[0m[32m    [ 16%][0m
+tests/test_cli.py::TestParseArgs::test_input_flag [32mPASSED[0m[32m                 [ 18%][0m
+tests/test_cli.py::TestParseArgs::test_output_flag [32mPASSED[0m[32m                [ 20%][0m
+tests/test_cli.py::TestParseArgs::test_combined_flags [32mPASSED[0m[32m             [ 22%][0m
+tests/test_cli.py::TestRunSearch::test_search_with_query [32mPASSED[0m[32m          [ 24%][0m
+tests/test_cli.py::TestRunSearch::test_search_with_json_format [32mPASSED[0m[32m    [ 26%][0m
+tests/test_cli.py::TestRunSearch::test_search_with_compact_format [32mPASSED[0m[32m [ 28%][0m
+tests/test_cli.py::TestRunSearch::test_search_with_output_file [32mPASSED[0m[32m    [ 30%][0m
+tests/test_cli.py::TestRunSearch::test_search_with_input_file [32mPASSED[0m[32m     [ 32%][0m
+tests/test_cli.py::TestRunSearch::test_search_with_missing_input_file [32mPASSED[0m[32m [ 34%][0m
+tests/test_cli.py::TestConfigureLogging::test_configure_logging_normal [32mPASSED[0m[32m [ 36%][0m
+tests/test_cli.py::TestConfigureLogging::test_configure_logging_verbose [32mPASSED[0m[32m [ 38%][0m
+tests/test_core.py::TestSearch::test_search_returns_list [32mPASSED[0m[32m          [ 40%][0m
+tests/test_core.py::TestSearch::test_search_returns_results [32mPASSED[0m[32m       [ 42%][0m
+tests/test_core.py::TestSearch::test_search_result_structure [32mPASSED[0m[32m      [ 44%][0m
+tests/test_core.py::TestSearch::test_search_with_custom_max_results [32mPASSED[0m[32m [ 46%][0m
+tests/test_core.py::TestSearch::test_search_includes_query_in_title [32mPASSED[0m[32m [ 48%][0m
+tests/test_security.py::TestValidateFilePath::test_valid_relative_path [32mPASSED[0m[32m [ 50%][0m
+tests/test_security.py::TestValidateFilePath::test_valid_absolute_path [32mPASSED[0m[32m [ 52%][0m
+tests/test_security.py::TestValidateFilePath::test_path_traversal_to_etc_blocked [32mPASSED[0m[32m [ 54%][0m
+tests/test_security.py::TestValidateFilePath::test_etc_directory_blocked [32mPASSED[0m[32m [ 56%][0m
+tests/test_security.py::TestValidateFilePath::test_proc_directory_blocked [32mPASSED[0m[32m [ 58%][0m
+tests/test_security.py::TestValidateFilePath::test_sys_directory_blocked [32mPASSED[0m[32m [ 60%][0m
+tests/test_security.py::TestValidateFilePath::test_dev_directory_blocked [32mPASSED[0m[32m [ 62%][0m
+tests/test_security.py::TestValidateFilePath::test_root_directory_blocked [32mPASSED[0m[32m [ 64%][0m
+tests/test_security.py::TestValidateFilePath::test_check_exists_validates_existence [32mPASSED[0m[32m [ 66%][0m
+tests/test_security.py::TestValidateFilePath::test_check_exists_allows_existing_file [32mPASSED[0m[32m [ 68%][0m
+tests/test_security.py::TestCheckFileSize::test_small_file_allowed [32mPASSED[0m[32m [ 70%][0m
+tests/test_security.py::TestCheckFileSize::test_large_file_rejected [32mPASSED[0m[32m [ 72%][0m
+tests/test_security.py::TestCheckFileSize::test_file_at_limit_allowed [32mPASSED[0m[32m [ 74%][0m
+tests/test_security.py::TestCheckFileSize::test_nonexistent_file_raises_error [32mPASSED[0m[32m [ 76%][0m
+tests/test_security.py::TestCheckFileSize::test_custom_max_size [32mPASSED[0m[32m   [ 78%][0m
+tests/test_security.py::TestPositiveInt::test_valid_positive_integer [32mPASSED[0m[32m [ 80%][0m
+tests/test_security.py::TestPositiveInt::test_zero_rejected [32mPASSED[0m[32m       [ 82%][0m
+tests/test_security.py::TestPositiveInt::test_negative_rejected [32mPASSED[0m[32m   [ 84%][0m
+tests/test_security.py::TestPositiveInt::test_too_large_rejected [32mPASSED[0m[32m  [ 86%][0m
+tests/test_security.py::TestPositiveInt::test_non_integer_rejected [32mPASSED[0m[32m [ 88%][0m
+tests/test_security.py::TestPositiveInt::test_boundary_values [32mPASSED[0m[32m     [ 90%][0m
+tests/test_security.py::TestMaxResultsValidation::test_valid_max_results [32mPASSED[0m[32m [ 92%][0m
+tests/test_security.py::TestMaxResultsValidation::test_max_results_at_boundaries [32mPASSED[0m[32m [ 94%][0m
+tests/test_security.py::TestMaxResultsValidation::test_max_results_zero_rejected [32mPASSED[0m[32m [ 96%][0m
+tests/test_security.py::TestMaxResultsValidation::test_max_results_negative_rejected [32mPASSED[0m[32m [ 98%][0m
+tests/test_security.py::TestMaxResultsValidation::test_max_results_too_large_rejected [32mPASSED[0m[32m [100%][0m
+
+[32m============================== [32m[1m50 passed[0m[32m in 0.15s[0m[32m ==============================[0m

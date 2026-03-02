@@ -1,0 +1,163 @@
+================================================================================
+CLI ARGUMENT PARSING - REGRESSION TEST REPORT
+================================================================================
+Project: metroplex-ideaforge-10
+Feature: CLI Argument Parsing (Linear Issue M2A-154)
+Test Date: 2026-03-01 23:23 UTC
+Test Type: Regression Test (CLI Tool)
+
+================================================================================
+OVERALL RESULT: PASS
+================================================================================
+
+All tests passed successfully. The CLI argument parsing feature is working
+correctly with all required functionality and security fixes in place.
+
+================================================================================
+TEST RESULTS BREAKDOWN
+================================================================================
+
+TEST 1: Help Flag Display
+--------------------------
+Status: PASS
+Commands tested:
+  - python -m src.cli --help
+  - python -m src.cli search --help
+Exit codes: 0 (both commands)
+Evidence: screenshots/test1-help-main.txt, screenshots/test1-help-search.txt
+Details: Both help commands display comprehensive usage information including:
+  - Available commands (search)
+  - All options and flags
+  - Usage examples
+  - Proper formatting
+
+TEST 2: Missing Required Arguments
+-----------------------------------
+Status: PASS
+Command: python -m src.cli search
+Exit code: 2 (error)
+Evidence: screenshots/test2-missing-args.txt
+Details: Properly displays error message:
+  "error: Either provide a query or use --input to specify an input file"
+
+TEST 3: Valid Arguments Processing
+-----------------------------------
+Status: PASS
+Commands tested:
+  3a. python -m src.cli search "artificial intelligence"
+      Exit code: 0
+      Evidence: screenshots/test3a-valid-basic.txt
+      Output: Displayed 1 result in text format
+      
+  3b. python -m src.cli search "test query" --verbose --format json --max-results 3
+      Exit code: 0
+      Evidence: screenshots/test3b-valid-options.txt
+      Output: JSON formatted results with debug logging
+      
+  3c. python -m src.cli search "another query" --format compact
+      Exit code: 0
+      Evidence: screenshots/test3c-valid-compact.txt
+      Output: Compact formatted results
+
+Details: All output formats (text, json, compact) work correctly.
+Verbose logging displays configuration and debug information as expected.
+
+TEST 4: Security Fixes Validation
+----------------------------------
+Status: PASS
+Commands tested:
+  4a. python -m src.cli search --input /etc/passwd
+      Exit code: 1 (error)
+      Evidence: screenshots/test4a-security-path-traversal.txt
+      Error: "Invalid input file: Access to system directory '/etc' is forbidden"
+      Result: Path traversal protection working
+      
+  4b. python -m src.cli search "test" --max-results -1
+      Exit code: 2 (error)
+      Evidence: screenshots/test4b-security-negative-max.txt
+      Error: "must be a positive integer, got -1"
+      Result: Negative value validation working
+      
+  4c. python -m src.cli search "test" --max-results 0
+      Exit code: 2 (error)
+      Evidence: screenshots/test4c-security-zero-max.txt
+      Error: "must be a positive integer, got 0"
+      Result: Zero value validation working
+
+Details: All security validations are functioning correctly:
+  - System directory access blocked (/etc, /proc, /sys, /dev, /root)
+  - Max results must be between 1 and 1000
+  - Proper error messages with non-zero exit codes
+
+TEST 5: Full Pytest Suite
+--------------------------
+Status: PASS
+Command: python -m pytest tests/ -v
+Exit code: 0
+Evidence: screenshots/test5-pytest-results.txt
+Results: 50 tests passed, 0 failed
+Test breakdown:
+  - test_cli.py: 18 tests (argument parsing, command execution)
+  - test_core.py: 5 tests (search functionality)
+  - test_security.py: 27 tests (validation, security checks)
+
+Details: All unit tests pass including:
+  - Argument parsing validation
+  - Flag combinations
+  - Input/output file handling
+  - Format options (json, text, compact)
+  - Security validations (path traversal, file size, positive integers)
+  - Boundary value testing
+
+================================================================================
+EVIDENCE FILES
+================================================================================
+All test outputs saved to:
+/home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10/screenshots/
+
+Files created:
+  1. test1-help-main.txt - Main help output
+  2. test1-help-search.txt - Search subcommand help
+  3. test2-missing-args.txt - Missing argument error
+  4. test3a-valid-basic.txt - Basic query execution
+  5. test3b-valid-options.txt - Query with multiple options
+  6. test3c-valid-compact.txt - Compact format output
+  7. test4a-security-path-traversal.txt - Path security test
+  8. test4b-security-negative-max.txt - Negative validation
+  9. test4c-security-zero-max.txt - Zero validation
+  10. test5-pytest-results.txt - Full test suite results
+
+================================================================================
+ISSUES FOUND
+================================================================================
+None
+
+All features working as expected. No bugs or regressions detected.
+
+================================================================================
+VERIFICATION CHECKLIST
+================================================================================
+✓ Help documentation displays correctly
+✓ Required argument validation works
+✓ Query processing executes successfully
+✓ All output formats (text, json, compact) function properly
+✓ Verbose logging displays debug information
+✓ Path traversal protection blocks system directories
+✓ Max results validation enforces positive integers (1-1000)
+✓ Zero and negative values properly rejected
+✓ All 50 unit tests pass
+✓ Proper exit codes (0 for success, non-zero for errors)
+
+================================================================================
+CONCLUSION
+================================================================================
+The CLI Argument Parsing feature (M2A-154) is fully functional and ready for
+production use. All acceptance criteria met:
+
+1. ✓ Help flag displays usage information
+2. ✓ Missing arguments show clear error messages
+3. ✓ Valid arguments process successfully
+4. ✓ Security fixes prevent path traversal and validate inputs
+5. ✓ Full test suite passes (50/50 tests)
+
+No issues found. Feature is production-ready.

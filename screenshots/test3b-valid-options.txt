@@ -1,0 +1,13 @@
+2026-03-01 23:23:22 - __main__ - DEBUG - Starting Token-Efficient Search API
+2026-03-01 23:23:22 - __main__ - DEBUG - Configuration: ToolConfig(query='test query', input_file=None, output_file=None, verbose=True, format='json', max_results=3)
+2026-03-01 23:23:22 - __main__ - DEBUG - Searching for: test query
+2026-03-01 23:23:22 - __main__ - DEBUG - Max results: 3
+2026-03-01 23:23:22 - __main__ - DEBUG - Output format: json
+2026-03-01 23:23:22 - __main__ - INFO - Found 1 result(s)
+[
+  {
+    "title": "Result for: test query",
+    "snippet": "This is a placeholder result.",
+    "relevance": 0.95
+  }
+]

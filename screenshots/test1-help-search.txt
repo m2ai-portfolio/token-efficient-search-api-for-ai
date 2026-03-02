@@ -1,0 +1,19 @@
+usage: search-api search [-h] [-i INPUT_FILE] [-o OUTPUT_FILE] [-v]
+                         [-f {json,text,compact}] [-n MAX_RESULTS]
+                         [query]
+
+positional arguments:
+  query                 Search query string
+
+options:
+  -h, --help            show this help message and exit
+  -i INPUT_FILE, --input INPUT_FILE
+                        Input file containing queries (alternative to
+                        positional query)
+  -o OUTPUT_FILE, --output OUTPUT_FILE
+                        Output file to write results to
+  -v, --verbose         Enable verbose/debug logging
+  -f {json,text,compact}, --format {json,text,compact}
+                        Output format (default: text)
+  -n MAX_RESULTS, --max-results MAX_RESULTS
+                        Maximum number of results (default: 5, max: 1000)

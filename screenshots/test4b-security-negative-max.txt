@@ -1,0 +1,4 @@
+usage: search-api search [-h] [-i INPUT_FILE] [-o OUTPUT_FILE] [-v]
+                         [-f {json,text,compact}] [-n MAX_RESULTS]
+                         [query]
+search-api search: error: argument -n/--max-results: must be a positive integer, got -1
