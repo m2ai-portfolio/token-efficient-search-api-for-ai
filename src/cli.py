@@ -1,6 +1,7 @@
 """CLI argument parsing for Token-Efficient Search API."""
 
 import argparse
+import os
 import sys
 import logging
 from dataclasses import dataclass
@@ -17,6 +18,8 @@ class ToolConfig:
     input_file: Optional[str] = None
     output_file: Optional[str] = None
     verbose: bool = False
+    quiet: bool = False
+    log_file: Optional[str] = None
     format: str = "text"
     max_results: int = 5
 
@@ -107,6 +110,18 @@ Examples:
     )
 
     search_parser.add_argument(
+        "-q", "--quiet",
+        action="store_true",
+        help="Suppress all output except errors"
+    )
+
+    search_parser.add_argument(
+        "--log-file",
+        dest="log_file",
+        help="Write logs to a file for debugging"
+    )
+
+    search_parser.add_argument(
         "-f", "--format",
         choices=["json", "text", "compact"],
         default="text",
@@ -138,6 +153,8 @@ Examples:
         input_file=parsed.input_file,
         output_file=parsed.output_file,
         verbose=parsed.verbose,
+        quiet=parsed.quiet,
+        log_file=parsed.log_file,
         format=parsed.format,
         max_results=parsed.max_results
     )
@@ -145,19 +162,57 @@ Examples:
     return config
 
 
-def configure_logging(verbose: bool = False) -> None:
+def configure_logging(verbose: bool = False, quiet: bool = False, log_file: Optional[str] = None) -> None:
     """
-    Configure logging based on verbosity level.
+    Configure logging based on verbosity and debug settings.
 
     Args:
         verbose: Enable verbose/debug logging if True
+        quiet: Suppress all output except errors if True
+        log_file: Optional file path to write logs to
     """
-    level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(
-        level=level,
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S"
-    )
+    # Check DEBUG environment variable
+    debug_env = os.environ.get('DEBUG', '').lower() in ('true', '1', 'yes')
+
+    # Create root logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.DEBUG)  # Capture everything at root
+
+    # Remove existing handlers
+    root_logger.handlers.clear()
+
+    # Console handler
+    console_handler = logging.StreamHandler(sys.stderr)
+    # Quiet takes precedence over verbose
+    if quiet:
+        console_handler.setLevel(logging.ERROR)
+        console_fmt = logging.Formatter("ERROR: %(message)s")
+    elif verbose or debug_env:
+        console_handler.setLevel(logging.DEBUG)
+        console_fmt = logging.Formatter(
+            "%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S"
+        )
+    else:
+        console_handler.setLevel(logging.WARNING)
+        console_fmt = logging.Formatter("%(levelname)s: %(message)s")
+    console_handler.setFormatter(console_fmt)
+    root_logger.addHandler(console_handler)
+
+    # File handler (if log_file specified)
+    if log_file:
+        # Validate the log file path for security
+        validated_log_path = validate_file_path(log_file, check_exists=False)
+        validated_log_path.parent.mkdir(parents=True, exist_ok=True)
+
+        file_handler = logging.FileHandler(str(validated_log_path), encoding='utf-8')
+        file_handler.setLevel(logging.DEBUG)
+        file_fmt = logging.Formatter(
+            "%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S"
+        )
+        file_handler.setFormatter(file_fmt)
+        root_logger.addHandler(file_handler)
 
 
 def run_search(config: ToolConfig) -> None:
@@ -247,12 +302,12 @@ def main() -> None:
     """Main entry point for the CLI."""
     try:
         config = parse_args()
-        configure_logging(verbose=config.verbose)
+        configure_logging(verbose=config.verbose, quiet=config.quiet, log_file=config.log_file)
 
         if config.verbose:
             logger = logging.getLogger(__name__)
             logger.debug("Starting Token-Efficient Search API")
-            logger.debug(f"Configuration: {config}")
+            logger.debug(f"Configuration: format={config.format}, max_results={config.max_results}, verbose={config.verbose}, quiet={config.quiet}")
 
         run_search(config)
 

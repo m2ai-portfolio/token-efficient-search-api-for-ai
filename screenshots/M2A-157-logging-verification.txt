@@ -1,0 +1,145 @@
+=== M2A-157: Logging and Debugging - Feature Verification ===
+
+1. NORMAL MODE (default - only warnings/errors in stderr):
+$ python -m src.cli search "AI agents"
+
+============================================================
+Found 5 result(s)
+============================================================
+
+Result #1
+  Title: Building AI Agents with Python
+  URL: https://example.com/ai-agents-python
+  Snippet: AI agents can be built using Python frameworks. Key components include planning, memory, tool use, and natural language understanding.
+  Relevance: 1.00
+  Tokens: 41
+
+Result #2
+  Title: Token Optimization Strategies for AI APIs
+  URL: https://example.com/token-optimization
+  Snippet: Reducing token usage in AI API calls is crucial for cost optimization. Strategies include prompt compression, response truncation, and efficient encod...
+  Relevance: 0.50
+  Tokens: 48
+
+Result #3
+
+---
+
+2. VERBOSE MODE (--verbose - shows debug logs):
+$ python -m src.cli search "AI agents" --verbose
+2026-03-02 00:02:29 - __main__ - main - DEBUG - Starting Token-Efficient Search API
+2026-03-02 00:02:29 - __main__ - main - DEBUG - Configuration: ToolConfig(query='AI agents', input_file=None, output_file=None, verbose=True, quiet=False, log_file=None, format='text', max_results=5)
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Processing 1 query/queries
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Max results: 5
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Output format: text
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Searching for: AI agents
+2026-03-02 00:02:29 - src.core - search - DEBUG - Validating query: AI agents
+2026-03-02 00:02:29 - src.core - search - DEBUG - Using knowledge base with 10 documents
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Introduction to Large Language Models': title=0.00, content=0.50, tags=0.50, total=0.3000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Token Optimization Strategies for AI APIs': title=0.50, content=0.50, tags=0.50, total=0.5000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Building AI Agents with Python': title=1.00, content=1.00, tags=1.00, total=1.0000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Web Search API Design Patterns': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Natural Language Processing Fundamentals': title=0.00, content=0.00, tags=0.50, total=0.1500
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Prompt Engineering Best Practices': title=0.00, content=0.00, tags=0.50, total=0.1500
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Vector Databases for Semantic Search': title=0.00, content=0.50, tags=0.00, total=0.1500
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Cost Management for AI Infrastructure': title=0.50, content=0.50, tags=0.50, total=0.5000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Python CLI Development Guide': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'RESTful API Authentication Methods': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:29 - src.core - search - DEBUG - Found 7 matching documents before limit
+2026-03-02 00:02:29 - src.core - search - INFO - Returning 5 results for query: AI agents
+2026-03-02 00:02:29 - __main__ - run_search - INFO - Found 5 result(s) from 1 query/queries
+
+============================================================
+Found 5 result(s)
+============================================================
+
+---
+
+3. QUIET MODE (--quiet - only errors):
+$ python -m src.cli search "Python" --quiet
+
+============================================================
+Found 2 result(s)
+============================================================
+
+Result #1
+  Title: Building AI Agents with Python
+  URL: https://example.com/ai-agents-python
+  Snippet: AI agents can be built using Python frameworks. Key components include planning, memory, tool use, and natural language understanding.
+  Relevance: 1.00
+  Tokens: 41
+
+Result #2
+  Title: Python CLI Development Guide
+  URL: https://example.com/python-cli-guide
+
+---
+
+4. LOG FILE (--log-file - writes debug logs to file):
+$ python -m src.cli search "AI" --log-file /tmp/demo.log
+
+============================================================
+Found 5 result(s)
+============================================================
+
+Result #1
+  Title: Token Optimization Strategies for AI APIs
+  URL: https://example.com/token-optimization
+  Snippet: Reducing token usage in AI API calls is crucial for cost optimization. Strategies include prompt compression, response truncation, and efficient encod...
+  Relevance: 1.00
+
+Log file contents (first 10 lines):
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Processing 1 query/queries
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Max results: 5
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Output format: text
+2026-03-02 00:02:29 - __main__ - run_search - DEBUG - Searching for: AI
+2026-03-02 00:02:29 - src.core - search - DEBUG - Validating query: AI
+2026-03-02 00:02:29 - src.core - search - DEBUG - Using knowledge base with 10 documents
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Introduction to Large Language Models': title=0.00, content=1.00, tags=1.00, total=0.8000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Token Optimization Strategies for AI APIs': title=1.00, content=1.00, tags=1.00, total=1.0000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Building AI Agents with Python': title=1.00, content=1.00, tags=1.00, total=1.0000
+2026-03-02 00:02:29 - src.core - calculate_relevance - DEBUG - Relevance for 'Web Search API Design Patterns': title=0.00, content=0.00, tags=0.00, total=0.0000
+
+---
+
+5. DEBUG ENV VAR (DEBUG=true - enables debug via environment):
+$ DEBUG=true python -m src.cli search "Python"
+2026-03-02 00:02:30 - __main__ - run_search - DEBUG - Processing 1 query/queries
+2026-03-02 00:02:30 - __main__ - run_search - DEBUG - Max results: 5
+2026-03-02 00:02:30 - __main__ - run_search - DEBUG - Output format: text
+2026-03-02 00:02:30 - __main__ - run_search - DEBUG - Searching for: Python
+2026-03-02 00:02:30 - src.core - search - DEBUG - Validating query: Python
+2026-03-02 00:02:30 - src.core - search - DEBUG - Using knowledge base with 10 documents
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Introduction to Large Language Models': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Token Optimization Strategies for AI APIs': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Building AI Agents with Python': title=1.00, content=1.00, tags=1.00, total=1.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Web Search API Design Patterns': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Natural Language Processing Fundamentals': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Prompt Engineering Best Practices': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Vector Databases for Semantic Search': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Cost Management for AI Infrastructure': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'Python CLI Development Guide': title=1.00, content=1.00, tags=1.00, total=1.0000
+2026-03-02 00:02:30 - src.core - calculate_relevance - DEBUG - Relevance for 'RESTful API Authentication Methods': title=0.00, content=0.00, tags=0.00, total=0.0000
+2026-03-02 00:02:30 - src.core - search - DEBUG - Found 2 matching documents before limit
+2026-03-02 00:02:30 - src.core - search - INFO - Returning 2 results for query: Python
+2026-03-02 00:02:30 - __main__ - run_search - INFO - Found 2 result(s) from 1 query/queries
+
+
+---
+
+6. ERROR WITH CONTEXT (verbose error logging):
+$ python -m src.cli search --input /tmp/nonexistent.txt --verbose
+2026-03-02 00:02:30 - __main__ - main - DEBUG - Starting Token-Efficient Search API
+2026-03-02 00:02:30 - __main__ - main - DEBUG - Configuration: ToolConfig(query=None, input_file='/tmp/nonexistent.txt', output_file=None, verbose=True, quiet=False, log_file=None, format='text', max_results=5)
+2026-03-02 00:02:30 - __main__ - run_search - DEBUG - Reading queries from file: /tmp/nonexistent.txt
+2026-03-02 00:02:30 - __main__ - run_search - ERROR - Input file not found: /tmp/nonexistent.txt
+
+---
+
+7. TEST RESULTS:
+$ python -m pytest tests/ -v --tb=line
+........................................................................ [ 59%]
+..................................................                       [100%]
+122 passed in 0.25s
+
+=== ALL FEATURES VERIFIED ===

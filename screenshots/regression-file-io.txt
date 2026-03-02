@@ -1,0 +1,26 @@
+REGRESSION TEST R2: File I/O functionality
+Command: echo "AI agents" > /tmp/qa_input.txt
+         python -m src.cli search --input /tmp/qa_input.txt --output /tmp/qa_output.txt
+Expected: Input and output file handling still works
+
+RESULT: PASS
+Input file read successfully
+Output file created successfully
+Output file contains expected search results:
+
+============================================================
+Found 5 result(s)
+============================================================
+
+Result #1
+  Title: Building AI Agents with Python
+  URL: https://example.com/ai-agents-python
+  Snippet: AI agents can be built using Python frameworks...
+  Relevance: 1.00
+  Tokens: 41
+
+[4 more results...]
+
+Total tokens: 223
+
+File I/O feature works correctly - No regression

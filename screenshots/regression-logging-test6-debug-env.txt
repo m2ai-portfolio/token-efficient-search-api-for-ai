@@ -1,0 +1,13 @@
+TEST 6: DEBUG environment variable
+Command: DEBUG=true python -m src.cli search "AI agents"
+Expected: DEBUG messages in stderr
+
+RESULT: PASS
+Environment variable DEBUG=true enabled debug logging
+Stderr contained DEBUG-level messages:
+2026-03-02 00:05:04 - __main__ - run_search - DEBUG - Processing 1 query/queries
+2026-03-02 00:05:04 - src.core - search - DEBUG - Validating query: AI agents
+2026-03-02 00:05:04 - src.core - calculate_relevance - DEBUG - Relevance for 'Building AI Agents with Python': title=1.00, content=1.00, tags=1.00, total=1.0000
+2026-03-02 00:05:04 - src.core - search - INFO - Returning 5 results for query: AI agents
+
+DEBUG env var works correctly

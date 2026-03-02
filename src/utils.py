@@ -1,8 +1,11 @@
 """Utility functions for the search API tool."""
 
 import json
+import logging
 from pathlib import Path
 from typing import List, Dict, Any
+
+logger = logging.getLogger(__name__)
 
 # Security constants
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB limit
@@ -97,6 +100,7 @@ def read_queries_from_file(file_path: str) -> list[str]:
     """
     # Validate path
     validated_path = validate_file_path(file_path, check_exists=True)
+    logger.debug(f"Reading queries from {validated_path}")
     # Check file size
     check_file_size(validated_path)
 
@@ -107,11 +111,14 @@ def read_queries_from_file(file_path: str) -> list[str]:
             data = json.load(f)
             if not isinstance(data, list):
                 raise ValueError("JSON input file must contain an array of query strings")
-            return [str(q).strip() for q in data if str(q).strip()]
+            queries = [str(q).strip() for q in data if str(q).strip()]
         else:
             # Default: treat as text, one query per line
             lines = f.readlines()
-            return [line.strip() for line in lines if line.strip()]
+            queries = [line.strip() for line in lines if line.strip()]
+
+    logger.info(f"Read {len(queries)} queries from {file_path}")
+    return queries
 
 
 def write_results_to_file(results_text: str, file_path: str) -> str:
@@ -130,6 +137,7 @@ def write_results_to_file(results_text: str, file_path: str) -> str:
         IOError: If file cannot be written
     """
     validated_path = validate_file_path(file_path, check_exists=False)
+    logger.debug(f"Writing results to {validated_path}")
 
     # Ensure parent directory exists
     validated_path.parent.mkdir(parents=True, exist_ok=True)
@@ -137,6 +145,7 @@ def write_results_to_file(results_text: str, file_path: str) -> str:
     with open(validated_path, 'w', encoding='utf-8') as f:
         f.write(results_text)
 
+    logger.info(f"Successfully wrote results to {validated_path}")
     return str(validated_path)
 
 

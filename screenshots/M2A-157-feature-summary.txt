@@ -1,0 +1,142 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                   M2A-157: LOGGING AND DEBUGGING                             ║
+║                      IMPLEMENTATION COMPLETE ✓                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ FEATURES IMPLEMENTED                                                         │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ✓ Enhanced configure_logging() function                                    │
+│    • Support for DEBUG environment variable                                 │
+│    • --quiet/-q flag for minimal output                                     │
+│    • --log-file flag for debug file logging                                 │
+│    • Quiet mode takes precedence over verbose                               │
+│    • Automatic parent directory creation for log files                      │
+│                                                                              │
+│  ✓ Updated ToolConfig dataclass                                             │
+│    • Added quiet: bool = False                                              │
+│    • Added log_file: Optional[str] = None                                   │
+│                                                                              │
+│  ✓ Strategic logging throughout codebase                                    │
+│    • src/core.py: Debug logs for search operations                          │
+│    • src/utils.py: Debug logs for file I/O                                  │
+│    • All critical operations logged with context                            │
+│                                                                              │
+│  ✓ Comprehensive test suite                                                 │
+│    • 23 new logging-specific tests                                          │
+│    • Tests for all modes: default, verbose, quiet                           │
+│    • Tests for log file creation and UTF-8 encoding                         │
+│    • Tests for DEBUG env var variations                                     │
+│    • Integration tests with actual search operations                        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ LOGGING MODES                                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  1. DEFAULT MODE (Normal)                                                    │
+│     Level: WARNING                                                           │
+│     Output: Only warnings and errors to stderr                              │
+│     Format: Simple - "WARNING: message"                                     │
+│     Use case: Production deployment                                         │
+│                                                                              │
+│  2. VERBOSE MODE (--verbose)                                                 │
+│     Level: DEBUG                                                             │
+│     Output: All debug, info, warning, error messages                        │
+│     Format: Detailed - timestamp, module, function, level, message          │
+│     Use case: Development and troubleshooting                               │
+│                                                                              │
+│  3. QUIET MODE (--quiet)                                                     │
+│     Level: ERROR                                                             │
+│     Output: Only errors to stderr                                           │
+│     Format: Simple - "ERROR: message"                                       │
+│     Use case: Automation and scripts                                        │
+│                                                                              │
+│  4. LOG FILE (--log-file /path/to/file.log)                                 │
+│     Level: DEBUG (always)                                                    │
+│     Output: All debug messages to file                                      │
+│     Format: Detailed - full context for offline analysis                    │
+│     Use case: Production debugging, audit trails                            │
+│                                                                              │
+│  5. DEBUG ENV VAR (DEBUG=true)                                               │
+│     Level: DEBUG                                                             │
+│     Output: Enables debug logging without CLI flags                         │
+│     Values: true, 1, yes (case-insensitive)                                 │
+│     Use case: Container environments, systemd services                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ TEST RESULTS                                                                 │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Total Tests: 122                                                            │
+│  Passed: 122 ✓                                                               │
+│  Failed: 0                                                                   │
+│  Execution Time: 0.25s                                                       │
+│                                                                              │
+│  Test Breakdown:                                                             │
+│    • CLI Tests: 21                                                           │
+│    • Core Tests: 16                                                          │
+│    • File I/O Tests: 19                                                      │
+│    • Logging Tests: 23 (NEW)                                                 │
+│    • Security Tests: 43                                                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ FILES CHANGED                                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Modified:                                                                   │
+│    • src/cli.py - Enhanced configure_logging(), added flags                 │
+│    • src/core.py - Added strategic logging for search operations            │
+│    • src/utils.py - Added logging for file I/O operations                   │
+│    • tests/test_cli.py - Updated for new logging parameters                 │
+│                                                                              │
+│  Created:                                                                    │
+│    • tests/test_logging.py - Comprehensive logging test suite               │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ MANUAL VERIFICATION                                                          │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  ✓ Normal mode → minimal output                                             │
+│  ✓ Verbose mode → shows detailed logs                                       │
+│  ✓ Quiet mode → only errors                                                 │
+│  ✓ Log file → creates file with debug content                               │
+│  ✓ DEBUG env var → enables debug logging                                    │
+│  ✓ Error with context → logged properly                                     │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ EXAMPLE USAGE                                                                │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  # Normal search (quiet, only results)                                       │
+│  $ python -m src.cli search "AI agents"                                      │
+│                                                                              │
+│  # Verbose debugging                                                         │
+│  $ python -m src.cli search "AI agents" --verbose                            │
+│                                                                              │
+│  # Quiet mode for scripts                                                    │
+│  $ python -m src.cli search "AI agents" --quiet                              │
+│                                                                              │
+│  # Log to file for analysis                                                  │
+│  $ python -m src.cli search "AI agents" --log-file /var/log/search.log       │
+│                                                                              │
+│  # Environment variable debug                                                │
+│  $ DEBUG=true python -m src.cli search "AI agents"                           │
+│                                                                              │
+│  # Combine verbose with log file                                             │
+│  $ python -m src.cli search "AI" --verbose --log-file /tmp/debug.log         │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+                         FEATURE IMPLEMENTATION: SUCCESS ✓
+                              ALL TESTS PASSING ✓

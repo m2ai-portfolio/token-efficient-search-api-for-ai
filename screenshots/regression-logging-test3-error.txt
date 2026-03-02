@@ -1,0 +1,16 @@
+TEST 3: Error logging with context
+Command: python -m src.cli search --input /tmp/nonexistent_file.txt --verbose
+Expected: Error message with file path context
+
+RESULT: PASS
+Error output:
+2026-03-02 00:04:59 - __main__ - main - DEBUG - Starting Token-Efficient Search API
+2026-03-02 00:04:59 - __main__ - main - DEBUG - Configuration: ToolConfig(query=None, input_file='/tmp/nonexistent_file.txt', output_file=None, verbose=True, quiet=False, log_file=None, format='text', max_results=5)
+2026-03-02 00:04:59 - __main__ - run_search - DEBUG - Reading queries from file: /tmp/nonexistent_file.txt
+2026-03-02 00:04:59 - __main__ - run_search - ERROR - Input file not found: /tmp/nonexistent_file.txt
+
+Error message includes:
+- Timestamp
+- Module and function name
+- ERROR log level
+- Complete file path context

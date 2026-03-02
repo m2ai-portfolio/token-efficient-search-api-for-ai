@@ -218,21 +218,22 @@ class TestRunSearch:
 
         assert exc_info.value.code == 1
 
-    def test_search_with_invalid_query(self, caplog):
+    def test_search_with_invalid_query(self, capsys):
         """Test search with invalid (empty) query."""
         config = ToolConfig(
             query="",
             format="text"
         )
 
-        configure_logging(verbose=False)
+        configure_logging(verbose=False, quiet=False)
 
         with pytest.raises(SystemExit) as exc_info:
             run_search(config)
 
         assert exc_info.value.code == 1
         # Check that error was logged
-        assert "Invalid query" in caplog.text
+        captured = capsys.readouterr()
+        assert "Invalid query" in captured.err or "cannot be empty" in captured.err
 
     def test_search_with_stdin(self, monkeypatch, capsys):
         """Test search with stdin input."""

@@ -1,0 +1,18 @@
+TEST 2: Verbose mode (detailed logs)
+Command: python -m src.cli search "AI agents" --verbose
+Expected: stderr contains DEBUG messages with timestamps and function names
+
+RESULT: PASS
+Sample DEBUG output:
+2026-03-02 00:04:58 - __main__ - main - DEBUG - Starting Token-Efficient Search API
+2026-03-02 00:04:58 - __main__ - main - DEBUG - Configuration: ToolConfig(query='AI agents', input_file=None, output_file=None, verbose=True, quiet=False, log_file=None, format='text', max_results=5)
+2026-03-02 00:04:58 - __main__ - run_search - DEBUG - Processing 1 query/queries
+2026-03-02 00:04:58 - src.core - search - DEBUG - Validating query: AI agents
+2026-03-02 00:04:58 - src.core - calculate_relevance - DEBUG - Relevance for 'Building AI Agents with Python': title=1.00, content=1.00, tags=1.00, total=1.0000
+
+All DEBUG messages include:
+- Timestamps (YYYY-MM-DD HH:MM:SS)
+- Module name (__main__, src.core)
+- Function name (main, run_search, search, calculate_relevance)
+- Log level (DEBUG, INFO)
+- Detailed context messages

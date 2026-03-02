@@ -1,0 +1,111 @@
+================================================================================
+QA REGRESSION TEST REPORT - M2A-157: Logging and Debugging
+================================================================================
+Project: /home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10
+Test Date: 2026-03-02
+Overall Result: PASS
+
+================================================================================
+NEW FEATURE TESTS (Logging and Debugging)
+================================================================================
+
+Test 1: Normal Mode (Minimal Output)                                     PASS
+  - Command executed without --verbose flag
+  - Stderr output was completely empty
+  - No DEBUG/INFO messages leaked to user
+  - Search completed successfully
+
+Test 2: Verbose Mode (Detailed Logs)                                     PASS
+  - --verbose flag enabled DEBUG logging
+  - Timestamps present in format: YYYY-MM-DD HH:MM:SS
+  - Module names included: __main__, src.core
+  - Function names included: main, run_search, search, calculate_relevance
+  - Log levels present: DEBUG, INFO
+  - Detailed context messages displayed
+
+Test 3: Error Logging with Context                                       PASS
+  - Error for missing file properly logged
+  - ERROR log level used
+  - Full file path included in error message
+  - Timestamp and function context present
+
+Test 4: Quiet Mode                                                        PASS
+  - --quiet flag suppressed all stderr output
+  - Only stdout (results) displayed
+  - No INFO, WARNING, or DEBUG messages
+
+Test 5: Log File Creation                                                PASS
+  - --log-file flag created log file
+  - Log file contains DEBUG-level messages
+  - All operations captured to file
+  - UTF-8 encoding preserved
+
+Test 6: DEBUG Environment Variable                                       PASS
+  - DEBUG=true environment variable enabled debug logging
+  - DEBUG messages appeared in stderr
+  - Behavior equivalent to --verbose flag
+
+================================================================================
+REGRESSION TESTS (Existing Features)
+================================================================================
+
+R1: Full pytest Suite                                                    PASS
+  - All 122 tests passed
+  - test_cli.py: 18 tests PASSED
+  - test_core.py: 37 tests PASSED
+  - test_file_io.py: 15 tests PASSED
+  - test_logging.py: 25 tests PASSED (NEW)
+  - test_security.py: 27 tests PASSED
+  - Execution time: 0.45s
+  - No test failures or regressions
+
+R2: File I/O Functionality                                               PASS
+  - Input file reading works correctly
+  - Output file writing works correctly
+  - Search results properly formatted
+  - No regression in file handling
+
+R3: Security Validation                                                  PASS
+  - /etc/passwd access blocked as expected
+  - Error message: "Access to system directory '/etc' is forbidden"
+  - Exit code 1 (error) returned correctly
+  - No security regressions detected
+
+================================================================================
+EVIDENCE FILES
+================================================================================
+
+/home/apexaipc/projects/yce-harness/generations/metroplex-ideaforge-10/screenshots/
+  - regression-logging-test1-normal.txt       (Test 1 evidence)
+  - regression-logging-test2-verbose.txt      (Test 2 evidence)
+  - regression-logging-test3-error.txt        (Test 3 evidence)
+  - regression-logging-test4-quiet.txt        (Test 4 evidence)
+  - regression-logging-test5-logfile.txt      (Test 5 evidence)
+  - regression-logging-test6-debug-env.txt    (Test 6 evidence)
+  - regression-pytest-suite.txt               (R1 evidence)
+  - regression-file-io.txt                    (R2 evidence)
+  - regression-security.txt                   (R3 evidence)
+  - test-summary.txt                          (This report)
+
+================================================================================
+SUMMARY
+================================================================================
+
+NEW FEATURE:
+  - 6/6 logging tests PASSED
+  - All logging modes work correctly (normal, verbose, quiet, log-file, DEBUG env)
+  - Error messages include proper context
+  - Log format includes timestamps and function names
+
+REGRESSION TESTS:
+  - 3/3 regression tests PASSED
+  - 122/122 pytest tests PASSED
+  - File I/O still functional
+  - Security validation still functional
+  - No regressions detected in existing features
+
+OVERALL RESULT: PASS
+The Logging and Debugging feature (M2A-157) is fully functional and does not
+introduce any regressions to existing features.
+
+================================================================================

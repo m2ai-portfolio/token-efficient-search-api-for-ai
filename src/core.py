@@ -1,8 +1,11 @@
 """Core search functionality for Token-Efficient Search API."""
 
 import re
+import logging
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -153,7 +156,12 @@ def calculate_relevance(query: str, item: Dict[str, Any]) -> float:
     if query_lower in title_lower or query_lower in content_lower:
         score = min(1.0, score + 0.2)
 
-    return round(min(1.0, score), 4)
+    final_score = round(min(1.0, score), 4)
+    logger.debug(
+        f"Relevance for '{item['title']}': title={title_overlap:.2f}, "
+        f"content={content_overlap:.2f}, tags={tag_overlap:.2f}, total={final_score:.4f}"
+    )
+    return final_score
 
 
 def truncate_snippet(content: str, query: str, max_length: int = 150) -> str:
@@ -241,9 +249,11 @@ def search(query: str, max_results: int = 5, knowledge_base: Optional[List[Dict[
     """
     # Validate query
     cleaned_query = validate_query(query)
+    logger.debug(f"Validating query: {cleaned_query}")
 
     # Use default knowledge base if none provided
     kb = knowledge_base if knowledge_base is not None else KNOWLEDGE_BASE
+    logger.debug(f"Using knowledge base with {len(kb)} documents")
 
     # Calculate relevance for each item
     scored_results = []
@@ -260,11 +270,15 @@ def search(query: str, max_results: int = 5, knowledge_base: Optional[List[Dict[
             )
             scored_results.append(result)
 
+    logger.debug(f"Found {len(scored_results)} matching documents before limit")
+
     # Sort by relevance (descending)
     scored_results.sort(key=lambda x: x.relevance, reverse=True)
 
     # Limit results
     scored_results = scored_results[:max_results]
+
+    logger.info(f"Returning {len(scored_results)} results for query: {cleaned_query}")
 
     # Convert to dictionaries
     return [r.to_dict() for r in scored_results]

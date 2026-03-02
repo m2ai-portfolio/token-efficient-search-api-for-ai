@@ -1,0 +1,14 @@
+TEST 5: Log file creation
+Command: python -m src.cli search "AI agents" --log-file /tmp/qa_logfile.log
+Expected: Log file created with DEBUG-level messages
+
+RESULT: PASS
+Log file created successfully at /tmp/qa_logfile.log
+Contains DEBUG-level messages:
+2026-03-02 00:05:03 - __main__ - run_search - DEBUG - Processing 1 query/queries
+2026-03-02 00:05:03 - __main__ - run_search - DEBUG - Max results: 5
+2026-03-02 00:05:03 - __main__ - run_search - DEBUG - Output format: text
+2026-03-02 00:05:03 - src.core - search - DEBUG - Validating query: AI agents
+2026-03-02 00:05:03 - src.core - calculate_relevance - DEBUG - Relevance for 'Building AI Agents with Python': title=1.00, content=1.00, tags=1.00, total=1.0000
+
+Log file captured all debug operations

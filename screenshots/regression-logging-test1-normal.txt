@@ -1,0 +1,7 @@
+TEST 1: Normal mode (minimal output)
+Command: python -m src.cli search "AI agents"
+Expected: stderr should be empty or minimal
+
+RESULT: PASS
+Stderr output was completely empty (no DEBUG/INFO messages)
+Search completed successfully with 5 results

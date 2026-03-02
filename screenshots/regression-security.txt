@@ -1,0 +1,11 @@
+REGRESSION TEST R3: Security validation
+Command: python -m src.cli search --input /etc/passwd
+Expected: Access to /etc should be blocked
+
+RESULT: PASS
+Exit code: 1 (error as expected)
+Error message: "ERROR: Invalid input file: Access to system directory '/etc' is forbidden"
+
+Security validation still works correctly
+System directories are properly blocked
+No regression in security features

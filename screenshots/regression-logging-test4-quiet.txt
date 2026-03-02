@@ -1,0 +1,8 @@
+TEST 4: Quiet mode (no output)
+Command: python -m src.cli search "AI agents" --quiet
+Expected: stderr empty (no warnings/info)
+
+RESULT: PASS
+Stderr output was completely empty
+Only stdout showed search results
+No INFO, WARNING, or DEBUG messages in stderr
