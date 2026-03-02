@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Token Optimization Strategies for AI APIs",
+    "snippet": "Reducing token usage in AI API calls is crucial for cost optimization. Strategies include prompt compression, response truncation, and efficient encod...",
+    "url": "https://example.com/token-optimization",
+    "relevance": 1.0,
+    "token_count": 48
+  },
+  {
+    "title": "Cost Management for AI Infrastructure",
+    "snippet": "Managing AI infrastructure costs involves monitoring API usage, optimizing batch sizes, caching responses, and selecting appropriate model sizes.",
+    "url": "https://example.com/ai-cost-management",
+    "relevance": 0.15,
+    "token_count": 45
+  }
+]

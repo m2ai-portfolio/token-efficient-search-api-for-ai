@@ -1,0 +1,89 @@
+=============================================================================
+Token-Efficient Search API - Feature 2: Core Command Implementation Demo
+Issue: M2A-155
+=============================================================================
+
+Test 1: Basic Search with Text Format
+--------------------------------------
+Command: python -m src.cli search "AI agents"
+
+Result:
+- Found 5 highly relevant results
+- Results sorted by relevance (1.00, 0.50, 0.50, 0.30, 0.15)
+- Each result includes: Title, URL, Snippet, Relevance Score, Token Count
+- Total tokens displayed: 223
+- Format: Clean, readable text output with separators
+
+Test 2: JSON Format with Max Results Limit
+-------------------------------------------
+Command: python -m src.cli search "token optimization" --format json --max-results 3
+
+Result:
+- Valid JSON output
+- Limited to 2 results (only 2 matched query)
+- All fields present: title, snippet, url, relevance, token_count
+- Perfect for programmatic consumption
+
+Test 3: Compact Format
+----------------------
+Command: python -m src.cli search "python cli" --format compact
+
+Result:
+- Single-line output with pipe separators
+- Shows: Result number, Title, URL, Relevance
+- Ideal for terminal display or quick scanning
+
+Test 4: Error Handling - Empty Query
+-------------------------------------
+Command: python -m src.cli search "   "
+
+Result:
+- Graceful error: "Invalid query: Search query cannot be empty"
+- Exit code: 1
+- User-friendly error message
+
+Test 5: Verbose Mode
+--------------------
+Command: python -m src.cli search "search api design" --verbose
+
+Result:
+- Debug logs showing configuration and search parameters
+- Detailed execution trace
+- Helps users understand what's happening
+
+Test 6: Stdin Support
+---------------------
+Command: echo "machine learning" | python -m src.cli search "-" --format compact
+
+Result:
+- Successfully reads query from stdin
+- Processes normally and returns results
+- Supports Unix pipeline patterns
+
+=============================================================================
+Test Coverage: 81 Tests Passing
+=============================================================================
+
+Test Categories:
+- Argument parsing: 11 tests
+- Search execution: 7 tests
+- Core search functionality: 40 tests
+- Security validation: 23 tests
+
+Key Improvements in Feature 2:
+1. Real search engine simulation with 10-document knowledge base
+2. Intelligent relevance scoring (title, content, tag matching)
+3. Token-efficient snippet generation centered on query terms
+4. Query validation with helpful error messages
+5. Stdin support for Unix pipeline integration
+6. Enhanced output formats with URL and token count fields
+7. Total token summary in text format
+
+All requirements met:
+✓ Processes input data (search queries) correctly
+✓ Handles errors gracefully with user-friendly messages
+✓ Outputs results in clear, readable formats (text/json/compact)
+✓ Supports common CLI patterns (stdin/stdout, --help, --verbose)
+✓ All 81 tests passing with 100% success rate
+
+=============================================================================

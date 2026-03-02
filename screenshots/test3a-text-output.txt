@@ -1,0 +1,24 @@
+2026-03-01 23:38:45 - __main__ - INFO - Found 2 result(s)
+
+============================================================
+Found 2 result(s)
+============================================================
+
+Result #1
+  Title: Token Optimization Strategies for AI APIs
+  URL: https://example.com/token-optimization
+  Snippet: Reducing token usage in AI API calls is crucial for cost optimization. Strategies include prompt compression, response truncation, and efficient encod...
+  Relevance: 1.00
+  Tokens: 48
+
+Result #2
+  Title: Cost Management for AI Infrastructure
+  URL: https://example.com/ai-cost-management
+  Snippet: Managing AI infrastructure costs involves monitoring API usage, optimizing batch sizes, caching responses, and selecting appropriate model sizes.
+  Relevance: 0.15
+  Tokens: 45
+
+============================================================
+Total tokens: 93
+============================================================
+

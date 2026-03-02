@@ -1,0 +1,17 @@
+usage: search-api [-h] {search} ...
+
+Token-Efficient Search API for AI - Optimized search with minimal token usage
+
+positional arguments:
+  {search}    Available commands
+    search    Search for documents matching a query
+
+options:
+  -h, --help  show this help message and exit
+
+Examples:
+  python -m src.cli search "artificial intelligence"
+  python -m src.cli search "machine learning" --max-results 10 --format json
+  python -m src.cli search --input queries.txt --output results.json
+  python -m src.cli search "AI agents" --verbose --format compact
+        

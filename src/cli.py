@@ -179,7 +179,7 @@ def run_search(config: ToolConfig) -> None:
             # Check file size before reading
             check_file_size(input_path)
 
-            with open(input_path, 'r') as f:
+            with open(input_path, 'r', encoding='utf-8') as f:
                 query = f.read().strip()
         except FileNotFoundError:
             logger.error(f"Input file not found: {config.input_file}")
@@ -193,12 +193,24 @@ def run_search(config: ToolConfig) -> None:
     else:
         query = config.query
 
+    # Support stdin
+    if query == "-":
+        logger.debug("Reading query from stdin")
+        query = sys.stdin.read().strip()
+        if not query:
+            logger.error("No input received from stdin")
+            sys.exit(1)
+
     logger.debug(f"Searching for: {query}")
     logger.debug(f"Max results: {config.max_results}")
     logger.debug(f"Output format: {config.format}")
 
     # Perform search
-    results = search(query, max_results=config.max_results)
+    try:
+        results = search(query, max_results=config.max_results)
+    except ValueError as e:
+        logger.error(f"Invalid query: {e}")
+        sys.exit(1)
     logger.info(f"Found {len(results)} result(s)")
 
     # Format results
@@ -211,7 +223,7 @@ def run_search(config: ToolConfig) -> None:
             # Validate output file path
             output_path = validate_file_path(config.output_file, check_exists=False)
 
-            with open(output_path, 'w') as f:
+            with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(formatted_output)
             logger.info(f"Results written to {config.output_file}")
         except ValueError as e:

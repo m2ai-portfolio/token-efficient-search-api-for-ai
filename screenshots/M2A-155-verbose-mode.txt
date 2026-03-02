@@ -1,0 +1,44 @@
+
+============================================================
+Found 5 result(s)
+============================================================
+
+Result #1
+  Title: Web Search API Design Patterns
+  URL: https://example.com/search-api-design
+  Snippet: Designing efficient search APIs requires consideration of relevance ranking, pagination, caching, and rate limiting. REST and GraphQL are common patte...
+  Relevance: 1.00
+  Tokens: 46
+
+Result #2
+  Title: Vector Databases for Semantic Search
+  URL: https://example.com/vector-databases
+  Snippet: Vector databases store embeddings for fast similarity search. Popular options include Pinecone, Weaviate, and ChromaDB for AI applications.
+  Relevance: 0.33
+  Tokens: 44
+
+Result #3
+  Title: RESTful API Authentication Methods
+  URL: https://example.com/api-authentication
+  Snippet: Common API authentication methods include API keys, OAuth 2.0, JWT tokens, and HMAC signatures. Choose based on security requirements and client types...
+  Relevance: 0.33
+  Tokens: 47
+
+Result #4
+  Title: Token Optimization Strategies for AI APIs
+  URL: https://example.com/token-optimization
+  Snippet: Reducing token usage in AI API calls is crucial for cost optimization. Strategies include prompt compression, response truncation, and efficient encod...
+  Relevance: 0.20
+  Tokens: 48
+
+Result #5
+  Title: Cost Management for AI Infrastructure
+  URL: https://example.com/ai-cost-management
+  Snippet: Managing AI infrastructure costs involves monitoring API usage, optimizing batch sizes, caching responses, and selecting appropriate model sizes.
+  Relevance: 0.10
+  Tokens: 45
+
+============================================================
+Total tokens: 230
+============================================================
+

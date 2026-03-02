@@ -1,0 +1,1 @@
+1. Python CLI Development Guide [https://example.com/python-cli-guide] (1.00) | 2. Building AI Agents with Python [https://example.com/ai-agents-python] (0.50)

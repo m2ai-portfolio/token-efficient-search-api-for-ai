@@ -1,0 +1,2 @@
+2026-03-01 23:38:47 - __main__ - INFO - Found 5 result(s)
+1. Web Search API Design Patterns [https://example.com/search-api-design] (1.00) | 2. Vector Databases for Semantic Search [https://example.com/vector-databases] (0.50) | 3. RESTful API Authentication Methods [https://example.com/api-authentication] (0.50) | 4. Token Optimization Strategies for AI APIs [https://example.com/token-optimization] (0.30) | 5. Cost Management for AI Infrastructure [https://example.com/ai-cost-management] (0.15)

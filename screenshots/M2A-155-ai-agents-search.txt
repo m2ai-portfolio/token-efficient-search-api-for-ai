@@ -1,0 +1,44 @@
+
+============================================================
+Found 5 result(s)
+============================================================
+
+Result #1
+  Title: Building AI Agents with Python
+  URL: https://example.com/ai-agents-python
+  Snippet: AI agents can be built using Python frameworks. Key components include planning, memory, tool use, and natural language understanding.
+  Relevance: 1.00
+  Tokens: 41
+
+Result #2
+  Title: Token Optimization Strategies for AI APIs
+  URL: https://example.com/token-optimization
+  Snippet: Reducing token usage in AI API calls is crucial for cost optimization. Strategies include prompt compression, response truncation, and efficient encod...
+  Relevance: 0.50
+  Tokens: 48
+
+Result #3
+  Title: Cost Management for AI Infrastructure
+  URL: https://example.com/ai-cost-management
+  Snippet: Managing AI infrastructure costs involves monitoring API usage, optimizing batch sizes, caching responses, and selecting appropriate model sizes.
+  Relevance: 0.50
+  Tokens: 45
+
+Result #4
+  Title: Introduction to Large Language Models
+  URL: https://example.com/llm-intro
+  Snippet: Large language models (LLMs) are AI systems trained on vast amounts of text data. They can generate human-like text, answer questions, and perform var...
+  Relevance: 0.30
+  Tokens: 47
+
+Result #5
+  Title: Natural Language Processing Fundamentals
+  URL: https://example.com/nlp-fundamentals
+  Snippet: NLP enables computers to understand human language. Key concepts include tokenization, embedding, parsing, and sentiment analysis.
+  Relevance: 0.15
+  Tokens: 42
+
+============================================================
+Total tokens: 223
+============================================================
+

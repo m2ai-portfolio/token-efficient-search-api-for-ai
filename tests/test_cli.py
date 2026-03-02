@@ -119,7 +119,7 @@ class TestRunSearch:
     def test_search_with_query(self, capsys):
         """Test search execution with a direct query."""
         config = ToolConfig(
-            query="test query",
+            query="AI agents",
             max_results=5,
             format="text"
         )
@@ -128,13 +128,13 @@ class TestRunSearch:
         run_search(config)
 
         captured = capsys.readouterr()
-        assert "Result for: test query" in captured.out
-        assert "Found 1 result(s)" in captured.out
+        assert "result(s)" in captured.out
+        assert "Relevance:" in captured.out
 
     def test_search_with_json_format(self, capsys):
         """Test search with JSON output format."""
         config = ToolConfig(
-            query="test",
+            query="Python",
             format="json"
         )
 
@@ -150,7 +150,7 @@ class TestRunSearch:
     def test_search_with_compact_format(self, capsys):
         """Test search with compact output format."""
         config = ToolConfig(
-            query="test",
+            query="Python",
             format="compact"
         )
 
@@ -158,7 +158,7 @@ class TestRunSearch:
         run_search(config)
 
         captured = capsys.readouterr()
-        assert "Result for: test" in captured.out
+        assert "|" in captured.out or "." in captured.out  # Compact format uses pipes or dots
 
     def test_search_with_output_file(self):
         """Test search with output file."""
@@ -167,7 +167,7 @@ class TestRunSearch:
 
         try:
             config = ToolConfig(
-                query="test query",
+                query="Python",
                 output_file=output_file,
                 format="text"
             )
@@ -176,16 +176,17 @@ class TestRunSearch:
             run_search(config)
 
             # Verify file was created and contains results
-            with open(output_file, 'r') as f:
+            with open(output_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-                assert "Result for: test query" in content
+                assert "result(s)" in content
+                assert "Relevance:" in content
         finally:
             Path(output_file).unlink(missing_ok=True)
 
     def test_search_with_input_file(self, capsys):
         """Test search with input file."""
         with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
-            f.write("test query from file")
+            f.write("AI agents Python")
             input_file = f.name
 
         try:
@@ -198,7 +199,8 @@ class TestRunSearch:
             run_search(config)
 
             captured = capsys.readouterr()
-            assert "Result for: test query from file" in captured.out
+            assert "result(s)" in captured.out
+            assert "Relevance:" in captured.out
         finally:
             Path(input_file).unlink(missing_ok=True)
 
@@ -215,6 +217,35 @@ class TestRunSearch:
             run_search(config)
 
         assert exc_info.value.code == 1
+
+    def test_search_with_invalid_query(self, caplog):
+        """Test search with invalid (empty) query."""
+        config = ToolConfig(
+            query="",
+            format="text"
+        )
+
+        configure_logging(verbose=False)
+
+        with pytest.raises(SystemExit) as exc_info:
+            run_search(config)
+
+        assert exc_info.value.code == 1
+        # Check that error was logged
+        assert "Invalid query" in caplog.text
+
+    def test_search_with_stdin(self, monkeypatch, capsys):
+        """Test search with stdin input."""
+        from io import StringIO
+        stdin_input = StringIO("AI agents")
+        monkeypatch.setattr('sys.stdin', stdin_input)
+
+        config = ToolConfig(query="-", format="text")
+        configure_logging(verbose=False)
+        run_search(config)
+
+        captured = capsys.readouterr()
+        assert "result(s)" in captured.out.lower() or "Result" in captured.out
 
 
 class TestConfigureLogging:

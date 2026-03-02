@@ -1,7 +1,6 @@
 """Utility functions for the search API tool."""
 
 import json
-import os
 from pathlib import Path
 from typing import List, Dict, Any
 
@@ -100,8 +99,9 @@ def format_results(results: List[Dict[str, Any]], format_type: str = "text") -> 
         compact_results = []
         for i, result in enumerate(results, 1):
             title = result.get("title", "No title")
+            url = result.get("url", "N/A")
             relevance = result.get("relevance", 0.0)
-            compact_results.append(f"{i}. {title} ({relevance:.2f})")
+            compact_results.append(f"{i}. {title} [{url}] ({relevance:.2f})")
         return " | ".join(compact_results)
 
     else:  # text format (default)
@@ -110,11 +110,19 @@ def format_results(results: List[Dict[str, Any]], format_type: str = "text") -> 
         output.append(f"Found {len(results)} result(s)")
         output.append(f"{'='*60}\n")
 
+        total_tokens = 0
         for i, result in enumerate(results, 1):
             output.append(f"Result #{i}")
             output.append(f"  Title: {result.get('title', 'No title')}")
+            output.append(f"  URL: {result.get('url', 'N/A')}")
             output.append(f"  Snippet: {result.get('snippet', 'No snippet')}")
             output.append(f"  Relevance: {result.get('relevance', 0.0):.2f}")
+            output.append(f"  Tokens: {result.get('token_count', 0)}")
             output.append("")
+            total_tokens += result.get('token_count', 0)
+
+        output.append(f"{'='*60}")
+        output.append(f"Total tokens: {total_tokens}")
+        output.append(f"{'='*60}\n")
 
         return "\n".join(output)

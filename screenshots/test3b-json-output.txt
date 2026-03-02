@@ -1,0 +1,17 @@
+2026-03-01 23:38:46 - __main__ - INFO - Found 2 result(s)
+[
+  {
+    "title": "Python CLI Development Guide",
+    "snippet": "Building Python CLI tools involves argument parsing, input validation, output formatting, and error handling. Libraries like argparse and click simpli...",
+    "url": "https://example.com/python-cli-guide",
+    "relevance": 1.0,
+    "token_count": 45
+  },
+  {
+    "title": "Building AI Agents with Python",
+    "snippet": "AI agents can be built using Python frameworks. Key components include planning, memory, tool use, and natural language understanding.",
+    "url": "https://example.com/ai-agents-python",
+    "relevance": 0.5,
+    "token_count": 41
+  }
+]

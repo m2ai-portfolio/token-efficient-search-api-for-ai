@@ -1,0 +1,24 @@
+2026-03-01 23:38:52 - __main__ - INFO - Found 3 result(s)
+[
+  {
+    "title": "Introduction to Large Language Models",
+    "snippet": "Large language models (LLMs) are AI systems trained on vast amounts of text data. They can generate human-like text, answer questions, and perform var...",
+    "url": "https://example.com/llm-intro",
+    "relevance": 1.0,
+    "token_count": 47
+  },
+  {
+    "title": "Natural Language Processing Fundamentals",
+    "snippet": "NLP enables computers to understand human language. Key concepts include tokenization, embedding, parsing, and sentiment analysis.",
+    "url": "https://example.com/nlp-fundamentals",
+    "relevance": 0.3333,
+    "token_count": 42
+  },
+  {
+    "title": "Building AI Agents with Python",
+    "snippet": "AI agents can be built using Python frameworks. Key components include planning, memory, tool use, and natural language understanding.",
+    "url": "https://example.com/ai-agents-python",
+    "relevance": 0.1,
+    "token_count": 41
+  }
+]

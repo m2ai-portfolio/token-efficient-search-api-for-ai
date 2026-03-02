@@ -1,0 +1,17 @@
+2026-03-01 23:38:57 - __main__ - INFO - Found 1 result(s)
+
+============================================================
+Found 1 result(s)
+============================================================
+
+Result #1
+  Title: Vector Databases for Semantic Search
+  URL: https://example.com/vector-databases
+  Snippet: Vector databases store embeddings for fast similarity search. Popular options include Pinecone, Weaviate, and ChromaDB for AI applications.
+  Relevance: 0.70
+  Tokens: 44
+
+============================================================
+Total tokens: 44
+============================================================
+
